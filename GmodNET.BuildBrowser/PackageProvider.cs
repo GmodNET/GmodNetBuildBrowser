@@ -22,6 +22,11 @@ namespace GmodNET.BuildBrowser
         readonly Regex package_matcher = new Regex(@"storage\/[^\/]+\.\d+\.\d+\.\d+(\-[a-zA-Z0-9\.\-]+)?\.([a-zA-Z0-9]+|tar\.gz)$", 
             RegexOptions.ECMAScript | RegexOptions.Compiled);
 
+        readonly Regex version_matcher = new Regex(@"\.\d+\.\d+\.\d+(\-[a-zA-Z0-9\.\-]+)?\.([a-zA-Z0-9]+|tar\.gz)$",
+            RegexOptions.ECMAScript | RegexOptions.Compiled);
+
+        readonly Regex file_extension_matcher = new Regex(@"\.([a-zA-Z0-9]+|tar\.gz)$", RegexOptions.ECMAScript | RegexOptions.Compiled);
+
         public bool WasDataLoaded => was_loaded;
 
         public bool WasOperationSuccessful => was_successful;
@@ -48,28 +53,46 @@ namespace GmodNET.BuildBrowser
         {
             try
             {
-                HttpResponseMessage response = await httpClient.GetAsync("https://gleb-krasilich.fra1.digitaloceanspaces.com/");
+                bool repeatRequest = true;
+                string requestMarker = null;
 
-                if(!response.IsSuccessStatusCode)
+                while (repeatRequest)
                 {
-                    throw new Exception("Unable to fetch the package storage (http status code " + response.StatusCode.ToString() + ").");
-                }
+                    string uriForRequest = "https://gleb-krasilich.fra1.digitaloceanspaces.com?prefix=GmodNETStorage%2Fstorage";
 
-                if(response.Content.Headers.ContentType.MediaType != "application/xml")
-                {
-                    throw new Exception("The package storage server returned invalid response ('Content-Type' header is not set to 'application/xml').");
-                }
-
-                XmlDocument xmlFileList = new XmlDocument();
-                xmlFileList.LoadXml(await response.Content.ReadAsStringAsync());
-
-                XmlNodeList contents = xmlFileList.GetElementsByTagName("Contents");
-
-                foreach(XmlNode n in contents)
-                {
-                    if(package_matcher.IsMatch(n["Key"].InnerText))
+                    if(requestMarker != null)
                     {
-                        string file_name_no_path = n["Key"].InnerText.Split("/").Last();
+                        uriForRequest += "&marker=" + Uri.EscapeDataString(requestMarker);
+                    }
+
+                    HttpResponseMessage response = await httpClient.GetAsync(uriForRequest);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new Exception("Unable to fetch the package storage (http status code " + response.StatusCode.ToString() + ").");
+                    }
+
+                    if (response.Content.Headers.ContentType.MediaType != "application/xml")
+                    {
+                        throw new Exception("The package storage server returned invalid response ('Content-Type' header is not set to 'application/xml').");
+                    }
+
+                    XmlDocument xmlFileList = new XmlDocument();
+                    xmlFileList.LoadXml(await response.Content.ReadAsStringAsync());
+
+                    XmlNodeList contents = xmlFileList.GetElementsByTagName("Contents");
+
+                    foreach (XmlNode n in contents)
+                    {
+                        if (package_matcher.IsMatch(n["Key"].InnerText))
+                        {
+                            string file_name_no_path = n["Key"].InnerText.Split("/").Last();
+
+                            string package_name = version_matcher.Replace(file_name_no_path, "");
+
+                            string version_name = version_matcher.Match(file_name_no_path).Value.Substring(1);
+                            version_name = file_extension_matcher.Replace(version_name, "");
+                        }
                     }
                 }
 
