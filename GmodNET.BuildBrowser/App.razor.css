@@ -1,0 +1,9 @@
+﻿#MainContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#MainHeader {
+    display: flex;
+    justify-content: center;
+}

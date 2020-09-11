@@ -1,0 +1,27 @@
+﻿@inject IPackageProvider packageProvider
+
+<div id="BuildBrowser">
+    @if (!packageProvider.WasDataLoaded)
+    {
+        <h1>Loading...</h1>
+    }
+    else
+    {
+        if(!packageProvider.WasOperationSuccessful)
+        {
+            <h3>Unable to load packages: @packageProvider.LoadException.ToString()</h3>
+        }
+        else
+        {
+            <h3>Packages were loaded</h3>
+        }
+    }
+</div>
+
+@code 
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await packageProvider.LoadPackagesDataAsync();
+    }
+}
