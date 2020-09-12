@@ -1,14 +1,4 @@
-﻿#MainContainer {
-    display: flex;
-    flex-direction: column;
-}
-
-#MainHeader {
-    display: flex;
-    justify-content: center;
-}
-
-#Container {
-    display: flex;
-    justify-content: center;
+﻿.HeaderLink {
+    /*Gray130*/
+    color: #605e5c;
 }

@@ -1,10 +1,57 @@
 @inject NavigationManager navigationManager
+@inject IPackageProvider packageProvider
 
+<div style="margin-left: 80px; margin-right: 80px">
+    <div style="display: flex; justify-content: center;">
+        <a href="index.html" class="ms-fontWeight-semibold ms-fontSize-32 ms-Link HeaderLink" @onclick="navigateToIndex" @onclick:preventDefault>
+            GmodNET Nightly Packages
+        </a>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 30px;">
+        <a href="https://dev.azure.com/GmodNET/gmodnet-artifacts/_packaging?_a=feed&feed=gmodnet-packages"
+           class="ms-fontWeight-semibold ms-fontSize-24 ms-Link" target="_blank" style="color: #0078d4;">
+            <i class="ms-Icon ms-Icon--NugetLogo" aria-hidden="true" style="font-size: 20px;"></i> Go to Nightly NuGet packages
+        </a>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 30px;">
+        <div class="ms-depth-4" style="background-color: white; width: 960px; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px;">
+            @if(!packageProvider.WasDataLoaded)
+            {
+                <div style="display: flex; justify-content: center;">
+                    <span class="ms-fontWeight-semibold ms-fontSize-24">Loading packages data...</span>
+                </div>
+                <div style="display: flex; justify-content: center; margin-top: 10px;">
+                    <img src="RollingLoad.svg" width="100"/>
+                </div>
+            }
+            else
+            {
+                if(!packageProvider.WasOperationSuccessful)
+                {
+                    <div style="display:flex; justify-content: center;">
+                        <span class="ms-fontWeight-semibold ms-fontSize-24" style="color: #c50f1f;">ERROR! Unable to load packages data.</span>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        Exception: @packageProvider.LoadException.ToString();
+                    </div>
+                }
+                else
+                {
 
+                }
+            }
+        </div>
+    </div>
+</div>
 
 @code{
-    void navigate_to_index()
+    void navigateToIndex()
     {
         navigationManager.NavigateTo("index.html");
+    }
+
+    override protected async Task OnInitializedAsync()
+    {
+        await packageProvider.LoadPackagesDataAsync();
     }
 }
