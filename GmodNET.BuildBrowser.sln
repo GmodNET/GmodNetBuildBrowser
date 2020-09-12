@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30428.66
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GmodNET.BuildBrowser", "GmodNET.BuildBrowser\GmodNET.BuildBrowser.csproj", "{1CB81ADE-2EA8-45C7-9813-C922DE70B108}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GmodNET.BuildBrowser.Tests", "GmodNET.BuildBrowser.Tests\GmodNET.BuildBrowser.Tests.csproj", "{04F72956-A812-4A32-9CA2-5AA5E981B57A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GmodNET.BuildBrowser.Tests", "GmodNET.BuildBrowser.Tests\GmodNET.BuildBrowser.Tests.csproj", "{04F72956-A812-4A32-9CA2-5AA5E981B57A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

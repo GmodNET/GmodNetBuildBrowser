@@ -1,0 +1,82 @@
+﻿@inject IPackageProvider packageProvider
+@inject NavigationManager navigationManager
+
+<div style="display:flex; justify-content: center">
+    <span class="ms-fontWeight-semibold ms-fontSize-24">
+        @if(String.IsNullOrEmpty(navigationManager.QueryString()["package"]))
+        {
+            <span>Packages list</span>
+        }
+        else
+        {
+            <span>@navigationManager.QueryString()["package"] package</span>
+        }
+    </span>
+</div>
+<div style="display: flex; flex-direction: column; margin-top: 10px;">
+    @if (String.IsNullOrEmpty(navigationManager.QueryString()["package"]))
+    {
+        if (packageProvider.GetPackages().Any())
+        {
+            <div style="display: flex; justify-content:space-between; margin-bottom: 10px;">
+                <span class="ms-fontWeight-semibold ms-fontSize-18">Package name</span> <span class="ms-fontWeight-semibold ms-fontSize-18">Last update</span>
+            </div>
+
+            foreach (Package p in packageProvider.GetPackages())
+            {
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding: 7px; background-color: #faf9f8;" class="ms-depth-4">
+                    <a href="index.html" class="ms-Link" style="color: #0078d4;"
+                       @onclick="@(e => navigationManager.NavigateTo("index.html?package=" + Uri.EscapeDataString(p.Name)))" @onclick:preventDefault>
+                        @p.Name
+                    </a>
+                    <span>
+                        @p.LastUpdate.GetWebTime()
+                    </span>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="display: flex; justify-content:center">
+                There are no packages in the storage.
+            </div>
+        }
+    }
+    else
+    {
+        if (packageProvider.GetPackages().All(p => p.Name != navigationManager.QueryString()["package"]) 
+            || !packageProvider.GetPackages().First(p => p.Name == navigationManager.QueryString()["package"]).Versions.Any())
+        {
+            <div style="display: flex; justify-content:center; margin-bottom: 10px;">
+                <span>There is no such package in the storage</span>
+            </div>
+        }
+        else
+        {
+            <div style="display: flex; justify-content:space-between; margin-bottom: 10px;">
+                <span class="ms-fontWeight-semibold ms-fontSize-18">Version</span> <span class="ms-fontWeight-semibold ms-fontSize-18">Upload time</span>
+            </div>
+
+            foreach (PackageVersion v in packageProvider.GetPackages().First(p => p.Name == navigationManager.QueryString()["package"]).Versions)
+            {
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding: 7px; background-color: #faf9f8;" class="ms-depth-4">
+                    <a href="@("/" + v.DownloadPath)" class="ms-Link" style="color: #0078d4;" download>
+                        @v.VersionString
+                    </a>
+                    <span>
+                        @v.UploadTime.GetWebTime()
+                    </span>
+                </div>
+            }
+        }
+    }
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        navigationManager.LocationChanged += (sender, args) => this.StateHasChanged();
+    }
+
+}
