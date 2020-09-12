@@ -17,7 +17,7 @@ namespace GmodNET.BuildBrowser
         bool was_successful;
         Exception load_exception;
 
-        List<Package> packages;
+        readonly List<Package> packages;
 
         readonly Regex package_matcher = new Regex(@"storage\/[^\/]+\.\d+\.\d+\.\d+(\-[a-zA-Z0-9\.\-]+)?\.([a-zA-Z0-9]+|tar\.gz)$", 
             RegexOptions.ECMAScript | RegexOptions.Compiled);
@@ -90,9 +90,25 @@ namespace GmodNET.BuildBrowser
 
                             string package_name = version_matcher.Replace(file_name_no_path, "");
 
-                            string version_name = version_matcher.Match(file_name_no_path).Value.Substring(1);
+                            string version_name = version_matcher.Match(file_name_no_path).Value[1..];
                             version_name = file_extension_matcher.Replace(version_name, "");
+
+                            if(packages.All(p => p.Name != package_name))
+                            {
+                                packages.Add(new Package(package_name));
+                            }
+
+                            packages.First(p => p.Name == package_name).AddVersion(version_name, n["Key"].InnerText, n["LastModified"].InnerText);
                         }
+                    }
+
+                    if(xmlFileList["IsTruncated"] != null && xmlFileList["IsTruncated"].InnerText == "true")
+                    {
+                        requestMarker = xmlFileList["NextMarker"].InnerText;
+                    }
+                    else
+                    {
+                        repeatRequest = false;
                     }
                 }
 
