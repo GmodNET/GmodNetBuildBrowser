@@ -27,7 +27,7 @@
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding: 7px; background-color: #faf9f8;" class="ms-depth-4">
                     <a href="index.html" class="ms-Link" style="color: #0078d4;"
                        @onclick="@(e => navigationManager.NavigateTo("index.html?package=" + Uri.EscapeDataString(p.Name)))" @onclick:preventDefault>
-                        @p.Name
+                        <i class="ms-Icon ms-Icon--Packages" aria-hidden="true"></i> @p.Name
                     </a>
                     <span>
                         @p.LastUpdate.GetWebTime()
@@ -61,7 +61,7 @@
             {
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding: 7px; background-color: #faf9f8;" class="ms-depth-4">
                     <a href="@("/" + v.DownloadPath)" class="ms-Link" style="color: #0078d4;" download>
-                        @v.VersionString
+                        <i class="ms-Icon ms-Icon--Package" aria-hidden="true"></i> @v.VersionString
                     </a>
                     <span>
                         @v.UploadTime.GetWebTime()
