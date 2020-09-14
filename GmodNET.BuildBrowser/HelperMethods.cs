@@ -18,7 +18,7 @@ namespace GmodNET.BuildBrowser
 
         public static string GetWebTime(this DateTime dateTime)
         {
-            var time_since = DateTime.UtcNow - dateTime;
+            var time_since = DateTime.Now - dateTime;
 
             string ret = dateTime.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
