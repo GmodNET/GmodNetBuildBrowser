@@ -98,7 +98,8 @@ namespace GmodNET.BuildBrowser
                                 packages.Add(new Package(package_name));
                             }
 
-                            packages.First(p => p.Name == package_name).AddVersion(version_name, n["Key"].InnerText, n["LastModified"].InnerText);
+                            packages.First(p => p.Name == package_name).AddVersion(version_name, 
+                                StorageProperties.StorageDomain + n["Key"].InnerText, n["LastModified"].InnerText);
                         }
                     }
 

@@ -60,7 +60,7 @@
             foreach (PackageVersion v in packageProvider.GetPackages().First(p => p.Name == navigationManager.QueryString()["package"]).Versions)
             {
                 <div style="display: flex; justify-content: space-between; margin-bottom: 15px; padding: 7px; background-color: #faf9f8;" class="ms-depth-4">
-                    <a href="@("/" + v.DownloadPath)" class="ms-Link" style="color: #0078d4;" download>
+                    <a href="@(v.DownloadPath)" class="ms-Link" style="color: #0078d4;" download>
                         <i class="ms-Icon ms-Icon--Package" aria-hidden="true"></i> @v.VersionString
                     </a>
                     <span>
