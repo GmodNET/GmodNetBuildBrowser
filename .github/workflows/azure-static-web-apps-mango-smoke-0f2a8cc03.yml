@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-dotnet@v1.8.1
 
       - name: Download .NET WASM workload
-        run: sudo dotnet workload install microsoft-net-sdk-blazorwebassembly-aot
+        run: dotnet workload install microsoft-net-sdk-blazorwebassembly-aot
 
       - name: Build Blazor app
         run: dotnet publish GmodNetBuildBrowser.csproj -o site -c Release
