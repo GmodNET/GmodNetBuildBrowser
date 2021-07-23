@@ -6,20 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>GmodNetBuildBrowser</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="GmodNetBuildBrowser.styles.css" rel="stylesheet" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/app.css" rel="stylesheet" />
+    <link href="/GmodNetBuildBrowser.styles.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <div style="height: 100vh; width: 100vw; display: flex; justify-content: center; flex-direction: column">
+            <div style="width: 100vw; display: flex; justify-content: center">
+                <div style="display: flex; flex-direction: column; align-content:center">
+                    <img src="/load-spinner.svg" />
+                    <div style="display: flex; justify-content: center">
+                        <h1>Loading...</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
-    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/_framework/blazor.webassembly.js"></script>
 </body>
 
 </html>
