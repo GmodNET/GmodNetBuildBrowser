@@ -1,9 +1,15 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="container-fluid d-flex justify-content-center text-white" style="background-color: #7952b3">
-    <h2>GmodNET Nightly Builds</h2>
+<div class="container-fluid d-flex justify-content-center text-white bg-primary pt-1">
+    <a href="/" class="text-white text-decoration-none"><h1><i class="bi bi-archive-fill"></i> GmodNET Nightly Builds</h1></a>
 </div>
 
-<div class="page">
+<div class="container d-flex justify-content-center mt-3">
+    <a href="https://dev.azure.com/GmodNET/gmodnet-artifacts/_packaging?_a=feed&feed=gmodnet-packages" target="_blank" class="text-decoration-none">
+        <h2 class="text-center"><i class="ms-Icon ms-Icon--NugetLogo"></i> Go to Nightly NuGet Packages</h2>
+    </a>
+</div>
+
+<div class="container-sm bg-white shadow-sm mt-3 rounded-2 pt-2 pb-3">
     @Body
 </div>

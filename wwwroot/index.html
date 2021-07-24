@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>GmodNetBuildBrowser</title>
+    <title>GmodNET Nightly Builds</title>
     <base href="/" />
-    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/app.css" rel="stylesheet" />
     <link href="/GmodNetBuildBrowser.styles.css" rel="stylesheet" />
 </head>
@@ -15,10 +15,10 @@
     <div id="app">
         <div style="height: 100vh; width: 100vw; display: flex; justify-content: center; flex-direction: column">
             <div style="width: 100vw; display: flex; justify-content: center">
-                <div style="display: flex; flex-direction: column; align-content:center">
-                    <img src="/load-spinner.svg" />
+                <div class="d-flex flex-column text-primary">
+                    <div class="d-flex justify-content-center"><div class="spinner-border" style="width: 5em; height: 5em" role="status"></div></div>
                     <div style="display: flex; justify-content: center">
-                        <h1>Loading...</h1>
+                        <h1 class="mt-4">Loading...</h1>
                     </div>
                 </div>
             </div>

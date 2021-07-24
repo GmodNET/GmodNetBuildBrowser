@@ -1,0 +1,32 @@
+﻿@if (releases is null)
+{
+    <div class="container-fluid d-flex justify-content-center text-primary">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Version</th>
+                <th scope="col" class="text-end">Upload time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var release in releases)
+            {
+                <tr>
+                    <th scope="row">
+                        <a href="/gmoddotnet-runtime/@release.Id" class="text-decoration-none">
+                            @release.TagName
+                        </a>
+                    </th>
+                    <td class="text-end">@TimeHelper.GetUploadTimeString(release.CreatedAt)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

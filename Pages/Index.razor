@@ -1,3 +1,22 @@
 ﻿@page "/"
 
-<h1>Hello, worldd!</h1>
+<div class="container-fluid d-flex justify-content-center mb-2">
+    <h3 class="text-primary display-6">Packages List</h3>
+</div>
+
+<div class="accordion" id="accordionPackages">
+    <div class="accordion-item">
+        <h3 class="accordion-header" id="headingGmodDotNetRuntime">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGmodDotNetRuntime" aria-expanded="false" aria-controls="collapseGmodDotNetRuntime">
+                <div>
+                    <h5><i class="bi bi-archive-fill"></i> Gmod.NET Runtime</h5>
+                </div>
+            </button>
+        </h3>
+        <div id="collapseGmodDotNetRuntime" class="accordion-collapse collapse" aria-labelledby="headingGmodDotNetRuntime" data-bs-parent="#accordionPackages">
+            <div class="accordion-body">
+                <GmodNetRuntimeVersions />
+            </div>
+        </div>
+    </div>
+</div>
