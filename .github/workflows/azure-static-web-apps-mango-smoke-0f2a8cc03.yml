@@ -25,6 +25,9 @@ jobs:
       - name: Download .NET WASM workload
         run: dotnet workload install microsoft-net-sdk-blazorwebassembly-aot
 
+      - name: Install sass
+        run: npm install -g sass
+
       - name: Build Blazor app
         run: dotnet publish GmodNetBuildBrowser.csproj -o site -c Release
 
