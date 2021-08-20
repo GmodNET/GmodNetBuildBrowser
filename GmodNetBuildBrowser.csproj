@@ -3,21 +3,29 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <BlazorEnableCompression>false</BlazorEnableCompression>
+    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0-preview.6.21355.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0-preview.6.21355.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0-preview.7.21378.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0-preview.7.21378.6" PrivateAssets="all" />
     <PackageReference Include="Octokit" Version="0.50.0" />
     <PackageReference Include="semver" Version="2.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-    <Watch Include="wwwroot/css/bootstrap.css" />
+    <Folder Include="wwwroot\js\" />
+    <Watch Include="custom-bootstrap.scss" />
   </ItemGroup>
 
-  <Target Name="BuildCss" BeforeTargets="BeforeBuild" Inputs="custom-bootstrap.scss" Outputs="wwwroot/css/bootstrap.css">
-    <Exec Command="sass custom-bootstrap.scss wwwroot/css/bootstrap.css" />
+  <Target Name="BuildCssAndCopyJs" BeforeTargets="Compile">
+    <Exec Command="npx sass custom-bootstrap.scss wwwroot/css/bootstrap.css" />
+    <Copy SourceFiles="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" DestinationFolder="wwwroot/js" />
+  </Target>
+
+  <Target Name="NpmInstall" Inputs="package.json" Outputs="obj/.npm_install" BeforeTargets="BuildCssAndCopyJs">
+    <Touch Files="obj/.npm_install" ForceTouch="true" AlwaysCreate="true" />
+    <Exec Command="npm install" />
   </Target>
 
 </Project>
