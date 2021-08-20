@@ -13,16 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Watch Include="wwwroot/css/bootstrap.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
   <Target Name="BuildCssAndCopyJs" BeforeTargets="Compile">
     <Exec Command="npx sass custom-bootstrap.scss wwwroot/css/bootstrap.css" />
     <Copy SourceFiles="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" DestinationFolder="wwwroot/js"/>
+  </Target>
+
+  <Target Name="NpmInstall" Inputs="package.json" Outputs="node_modules/.npm_install" BeforeTargets="BuildCssAndCopyJs">
+    <Touch Files="node_modules/.npm_install" ForceTouch="true" AlwaysCreate="true" />
+    <Exec Command="npm install" />
   </Target>
 
 </Project>
