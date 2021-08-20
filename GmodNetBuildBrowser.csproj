@@ -16,8 +16,13 @@
     <Watch Include="wwwroot/css/bootstrap.css" />
   </ItemGroup>
 
-  <Target Name="BuildCss" BeforeTargets="BeforeBuild" Inputs="custom-bootstrap.scss" Outputs="wwwroot/css/bootstrap.css">
-    <Exec Command="sass custom-bootstrap.scss wwwroot/css/bootstrap.css" />
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <Target Name="BuildCssAndCopyJs" BeforeTargets="Compile">
+    <Exec Command="npx sass custom-bootstrap.scss wwwroot/css/bootstrap.css" />
+    <Copy SourceFiles="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" DestinationFolder="wwwroot/js"/>
   </Target>
 
 </Project>
