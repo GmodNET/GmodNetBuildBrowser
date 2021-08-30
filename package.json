@@ -18,6 +18,7 @@
   "homepage": "https://github.com/GmodNET/GmodNetBuildBrowser#readme",
   "dependencies": {
     "bootstrap": "^5.1.0",
+    "bootstrap-icons": "^1.5.0",
     "sass": "^1.38.0"
   }
 }

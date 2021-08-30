@@ -14,18 +14,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\" />
     <Watch Include="custom-bootstrap.scss" />
+    <Watch Include="package-lock.json" />
   </ItemGroup>
 
-  <Target Name="BuildCssAndCopyJs" BeforeTargets="Compile">
-    <Exec Command="npx sass custom-bootstrap.scss wwwroot/css/bootstrap.css" />
-    <Copy SourceFiles="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" DestinationFolder="wwwroot/js" />
+  <Target Name="NpmReady" BeforeTargets="Compile">
+    
   </Target>
 
-  <Target Name="NpmInstall" Inputs="package.json" Outputs="obj/.npm_install" BeforeTargets="BuildCssAndCopyJs">
-    <Touch Files="obj/.npm_install" ForceTouch="true" AlwaysCreate="true" />
+  <Target Name="NpmInstall" Inputs="package-lock.json" Outputs="obj/.npm_install" BeforeTargets="NpmReady">
     <Exec Command="npm install" />
+    <Touch Files="obj/.npm_install" ForceTouch="true" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="CompileSASS" Inputs="package-lock.json;custom-bootstrap.scss" Outputs="wwwroot/css/bootstrap.css" AfterTargets="NpmReady">
+    <Exec Command="npx sass custom-bootstrap.scss wwwroot/css/bootstrap.css" />
+  </Target>
+
+  <Target Name="CopyJS" Inputs="package-lock.json" Outputs="wwwroot/js/bootstrap.bundle.min.js" AfterTargets="NpmReady">
+    <Copy SourceFiles="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js" DestinationFolder="wwwroot/js" />
   </Target>
 
 </Project>

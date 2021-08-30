@@ -1,6 +1,10 @@
-﻿@if (releases is null)
+﻿<div class="container-fluid d-flex justify-content-center">
+    <RefreshButton OnClick=RefreshHandler/>
+</div>
+
+@if (releases is null)
 {
-    <div class="container-fluid d-flex justify-content-center text-primary">
+    <div class="container-fluid d-flex justify-content-center text-primary mt-3">
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>

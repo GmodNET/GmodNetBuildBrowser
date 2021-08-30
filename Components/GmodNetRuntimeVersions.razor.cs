@@ -17,12 +17,28 @@ namespace GmodNetBuildBrowser.Components
 
         protected override async Task OnInitializedAsync()
         {
+            await LoadReleases();
+        }
+
+        async Task LoadReleases()
+        {
             releases = (await githubClient.Repository.Release.GetAll("GmodNET", "runtime-nightly")).ToList();
 
             releases.Sort((x, y) =>
             {
                 return -SemVersion.Compare(SemVersion.Parse(x.TagName), SemVersion.Parse(y.TagName));
             });
+        }
+
+        async Task RefreshHandler()
+        {
+            releases = null;
+
+            this.StateHasChanged();
+
+            await LoadReleases();
+
+            this.StateHasChanged();
         }
     }
 }

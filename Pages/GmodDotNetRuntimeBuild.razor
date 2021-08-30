@@ -19,7 +19,24 @@
     </div>
 
     <div class="container-fluid d-flex justify-content-center mt-3 text-center">
-        Upload time: @TimeHelper.GetUploadTimeString(release.CreatedAt)
+        <strong>Upload time:&nbsp;</strong> @TimeHelper.GetUploadTimeString(release.CreatedAt)
+    </div>
+
+    <div class="container-fluid d-flex justify-content-center mt-3 text-center">
+        <strong>Commit:&nbsp;</strong>
+        <a href="@releaseCommit.HtmlUrl" class="text-decoration-none">@releaseCommit.Sha</a>
+    </div>
+
+    <div class="container-fluid d-flex justify-content-center mt-3 text-center">
+        <strong>Commit author:&nbsp;</strong> @releaseCommit.Commit.Author.Name
+    </div>
+
+    <div class="container-fluid d-flex justify-content-center mt-3 text-center">
+        <strong>Commit message:</strong>
+    </div>
+
+    <div class="container-fluid d-flex justify-content-center text-center">
+        <em>@releaseCommit.Commit.Message</em>
     </div>
 
     <div class="container-fluid d-flex justify-content-center mt-3 text-center">
