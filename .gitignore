@@ -458,6 +458,5 @@ wwwroot/css/bootstrap.css
 wwwroot/css/bootstrap.css.map
 
 ## Node.js
-package-lock.json
 node_modules/
 wwwroot/js/bootstrap.bundle.min.js
