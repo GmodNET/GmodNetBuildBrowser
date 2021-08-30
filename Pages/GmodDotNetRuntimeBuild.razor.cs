@@ -16,6 +16,7 @@ namespace GmodNetBuildBrowser.Pages
         public GitHubClient gitHubClient { get; set; }
 
         Release release;
+        GitHubCommit releaseCommit;
         Exception initException;
 
         protected override async Task OnInitializedAsync()
@@ -23,6 +24,9 @@ namespace GmodNetBuildBrowser.Pages
             try
             {
                 release = await gitHubClient.Repository.Release.Get("GmodNET", "runtime-nightly", Id);
+                var tags = await gitHubClient.Repository.GetAllTags("GmodNET", "runtime-nightly");
+                RepositoryTag tag = tags.First(t => t.Name == release.TagName);
+                releaseCommit = await gitHubClient.Repository.Commit.Get("GmodNET", "GmodDotNet", tag.Commit.Sha);
             }
             catch (Exception ex)
             {
