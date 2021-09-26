@@ -5,40 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Octokit;
 using Semver;
+using GmodNetBuildBrowser.Services;
 
 namespace GmodNetBuildBrowser.Components
 {
     public partial class GmodNetRuntimeVersions
     {
         [Inject]
-        public GitHubClient githubClient { get; set; }
-
-        List<Release> releases;
+        GmodNetRuntimeVersionsProvider versionsProvider { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadReleases();
-        }
+            versionsProvider.StateChanged += StateHasChanged;
 
-        async Task LoadReleases()
-        {
-            releases = (await githubClient.Repository.Release.GetAll("GmodNET", "runtime-nightly")).ToList();
-
-            releases.Sort((x, y) =>
+            if(versionsProvider.Releases is null)
             {
-                return -SemVersion.Compare(SemVersion.Parse(x.TagName), SemVersion.Parse(y.TagName));
-            });
-        }
-
-        async Task RefreshHandler()
-        {
-            releases = null;
-
-            this.StateHasChanged();
-
-            await LoadReleases();
-
-            this.StateHasChanged();
+                await versionsProvider.FetchReleasesAsync();
+            }
         }
     }
 }

@@ -4,29 +4,27 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Octokit;
+using GmodNetBuildBrowser.Services;
+using GmodNetBuildBrowser.Records;
 
 namespace GmodNetBuildBrowser.Pages
 {
     public partial class GmodDotNetRuntimeBuild
     {
+        Exception initException;
+        RuntimeVersionRecord versionRecord;
+
         [Parameter]
         public int Id { get; set; }
 
         [Inject]
-        public GitHubClient gitHubClient { get; set; }
-
-        Release release;
-        GitHubCommit releaseCommit;
-        Exception initException;
+        RuntimeBuildInfoProvider buildInfoProvider { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                release = await gitHubClient.Repository.Release.Get("GmodNET", "runtime-nightly", Id);
-                var tags = await gitHubClient.Repository.GetAllTags("GmodNET", "runtime-nightly");
-                RepositoryTag tag = tags.First(t => t.Name == release.TagName);
-                releaseCommit = await gitHubClient.Repository.Commit.Get("GmodNET", "GmodDotNet", tag.Commit.Sha);
+                versionRecord = await buildInfoProvider.GetBuildByIdAsync(Id);
             }
             catch (Exception ex)
             {

@@ -1,8 +1,8 @@
 ﻿<div class="container-fluid d-flex justify-content-center">
-    <RefreshButton OnClick=RefreshHandler/>
+    <RefreshButton OnClick=@versionsProvider.FetchReleasesAsync IsDisabled=@(versionsProvider.Releases is null)/>
 </div>
 
-@if (releases is null)
+@if (versionsProvider.Releases is null)
 {
     <div class="container-fluid d-flex justify-content-center text-primary mt-3">
         <div class="spinner-border" role="status">
@@ -20,7 +20,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach(var release in releases)
+            @foreach(var release in versionsProvider.Releases)
             {
                 <tr>
                     <th scope="row">

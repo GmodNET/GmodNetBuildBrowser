@@ -10,17 +10,15 @@ public partial class RefreshButton
     [Parameter]
     public Func<Task> OnClick { get; set; }
 
-    bool isDisabled = false;
+    [EditorRequired]
+    [Parameter]
+    public bool IsDisabled { get; set; }
 
     async Task OnClickHandler()
     {
-        isDisabled = true;
-
         if (OnClick is not null)
         {
             await OnClick();
         }
-
-        isDisabled = false;
     }
 }
