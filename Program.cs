@@ -18,7 +18,7 @@ namespace GmodNetBuildBrowser
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<GitHubClient>(sp => new GitHubClient(new ProductHeaderValue("gmodnet-nightly-builds-browser")));
-            builder.Services.AddSingleton<GmodNetRuntimeVersionsProvider>();
+            builder.Services.AddScoped<GmodNetRuntimeVersionsProvider>();
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<RuntimeBuildInfoProvider>();
 

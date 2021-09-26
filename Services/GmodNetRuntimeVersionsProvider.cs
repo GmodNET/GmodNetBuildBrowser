@@ -21,9 +21,9 @@ namespace GmodNetBuildBrowser.Services
             get {  return releases; }
         }
 
-        public GmodNetRuntimeVersionsProvider(IServiceScopeFactory scope_factory)
+        public GmodNetRuntimeVersionsProvider(GitHubClient gitHubClient)
         {
-            gitHubClient = scope_factory.CreateScope().ServiceProvider.GetRequiredService<GitHubClient>();
+            this.gitHubClient = gitHubClient;
         }
 
         public async Task FetchReleasesAsync()
