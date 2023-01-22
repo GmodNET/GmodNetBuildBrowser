@@ -35,7 +35,8 @@ namespace GmodNetBuildBrowser.Services
 
             tmp_releases.Sort((x, y) =>
             {
-                return -SemVersion.Compare(SemVersion.Parse(x.TagName), SemVersion.Parse(y.TagName));
+                return -SemVersion.CompareSortOrder(SemVersion.Parse(x.TagName, SemVersionStyles.Any), 
+                                                   SemVersion.Parse(y.TagName, SemVersionStyles.Any));
             });
 
             releases = tmp_releases.AsReadOnly();
