@@ -13,3 +13,22 @@
 <div class="container-sm bg-white shadow-sm mt-3 rounded-2 pt-2 pb-3">
     @Body
 </div>
+
+<div class="container-sm text-secondary fs-6 fw-lighter mt-2 mb-2">
+    <div class="d-flex justify-content-center">
+        <a href="https://github.com/GmodNET/GmodNetBuildBrowser" class="text-decoration-none" target="_blank">
+            GmodNET Build Browser (Blazor WebAssembly app)
+        </a>
+    </div>
+    <div class="d-flex justify-content-center">Version: @GmodNET.VersionTool.Info.BuildInfo.VersionWithoutBuildData</div>
+    <div class="d-flex justify-content-center"><span>Commit: 
+        <a href="@CommitLink" target="_blank" class="text-decoration-none">
+            @GmodNET.VersionTool.Info.BuildInfo.CommitHash
+        </a></span>
+    </div>
+    <div class="d-flex justify-content-center">.NET Runtime: @Environment.Version</div>
+</div>
+
+@code {
+    string CommitLink => $"https://github.com/GmodNET/GmodNetBuildBrowser/commit/{GmodNET.VersionTool.Info.BuildInfo.CommitHash}";
+}

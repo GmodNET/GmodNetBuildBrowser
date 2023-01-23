@@ -13,15 +13,14 @@ namespace GmodNetBuildBrowser
 
         protected override async Task OnInitializedAsync()
         {
-            Console.WriteLine("GmodNET Nightly Builds Browser\n" +
-                              $"Version {BuildInfo.FullVersion}");
-
-            if (!(await localStorage.ContainKeyAsync("AppVersion")) || 
+            if (!(await localStorage.ContainKeyAsync("AppVersion")) 
+                || 
                 (await localStorage.GetItemAsync<string>("AppVersion")) != BuildInfo.FullVersion)
-            {
-                await localStorage.ClearAsync();
-                await localStorage.SetItemAsync("AppVersion", BuildInfo.FullVersion);
-            }
+                {
+                    Console.WriteLine("New version of GmodNET Build Browser detected, initiating new local cache");
+                    await localStorage.ClearAsync();
+                    await localStorage.SetItemAsync("AppVersion", BuildInfo.FullVersion);
+                }
         }
     }
 }
